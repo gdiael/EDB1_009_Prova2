@@ -149,15 +149,29 @@ bool LinkedList::isOrdered()
 
 bool LinkedList::insertEnd(string s)
 {
-    Node<string> novo(s);
-    novo.linkMeBefore(this->tail);
+    Node<string>* novo = new Node<string>(s);
+    novo->linkMeBefore(this->tail);
+    this->quantity++;
     return true;
-    // std::cerr << "\tERRO: Método LinkedList::insertEnd(string s) ainda não foi implementado." << std::endl;
-    // std::abort();
 }
 
 void LinkedList::sort()
 {
-	std::cerr << "\tERRO: Método LinkedList::sort() ainda não foi implementado." << std::endl;
-    std::abort();
+    bool changed;
+    if(this->quantity > 1){
+        do{
+            changed = false;
+            Node<string>* n1 = this->head->getNext();
+            while(n1->getNext() != this->tail){
+                Node<string>* n2 = n1->getNext();
+                if(n1->getValue() > n2->getValue()){
+                    n1->unlinkMe();
+                    n1->linkMeAfter(n2);
+                    changed = true;
+                }else{
+                    n1 = n2;
+                };
+            };
+        }while(changed);
+    };
 }
